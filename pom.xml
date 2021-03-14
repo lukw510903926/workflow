@@ -12,7 +12,7 @@
     <properties>
         <jdk.version>1.8</jdk.version>
         <project.encoding>UTF-8</project.encoding>
-        <flowable-version>6.6.0</flowable-version>
+        <activiti-version>7.1.0.M6</activiti-version>
     </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -61,30 +61,26 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
         <dependency>
             <groupId>org.activiti</groupId>
-            <artifactId>activiti-spring-boot-starter</artifactId>
-            <version>7.1.0.M5</version>
-            <exclusions>
-                <exclusion>
-                    <artifactId>activiti-spring-identity</artifactId>
-                    <groupId>org.activiti.core.common</groupId>
-                </exclusion>
-                <exclusion>
-                    <groupId>org.activiti.core.common</groupId>
-                    <artifactId>activiti-spring-security</artifactId>
-                </exclusion>
-            </exclusions>
+            <artifactId>activiti-spring</artifactId>
+            <version>${activiti-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.activiti</groupId>
+            <artifactId>activiti-engine</artifactId>
+            <version>${activiti-version}</version>
         </dependency>
         <dependency>
             <groupId>org.activiti</groupId>
             <artifactId>activiti-json-converter</artifactId>
-            <version>7.1.0.M5</version>
+            <version>${activiti-version}</version>
         </dependency>
         <dependency>
             <groupId>org.activiti</groupId>
             <artifactId>activiti-image-generator</artifactId>
-            <version>7.1.0.M5</version>
+            <version>${activiti-version}</version>
         </dependency>
 
         <dependency>

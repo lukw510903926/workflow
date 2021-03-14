@@ -11,6 +11,7 @@ import org.activiti.engine.TaskService;
 import org.activiti.spring.ProcessEngineFactoryBean;
 import org.activiti.spring.SpringProcessEngineConfiguration;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.annotation.Resource;
@@ -23,7 +24,7 @@ import javax.sql.DataSource;
  * @since : 2020/2/27 10:28 上午
  */
 @Slf4j
-//@Configuration
+@Configuration
 public class ProcessEngineConfig {
 
     @Resource
@@ -50,6 +51,7 @@ public class ProcessEngineConfig {
         return processEngineFactory;
     }
 
+    @Bean
     public ProcessEngine processEngine() {
 
         try {

@@ -1,7 +1,6 @@
 package com.workflow;
 
 import lombok.extern.slf4j.Slf4j;
-import org.activiti.core.common.spring.security.policies.conf.SecurityPoliciesProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -18,7 +17,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  */
 @Slf4j
 @EnableCaching
-@SpringBootApplication(exclude = {SecurityPoliciesProperties.class})
+@SpringBootApplication
 @MapperScan(basePackages = "com.workflow.dao")
 @ServletComponentScan("com.workflow.config")
 public class WorkflowApplication extends SpringBootServletInitializer {
