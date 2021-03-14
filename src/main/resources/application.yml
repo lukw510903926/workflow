@@ -1,0 +1,6 @@
+spring:
+  activiti:
+    database-schema-update: true
+    # 开启历史库
+    db-history-used: true
+    history-level: audit

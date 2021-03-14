@@ -1,0 +1,60 @@
+@charset "UTF-8";
+/* CSS Document */
+
+@import url("base.css");
+@import url("header.css");
+@import url("ico.css");
+@import url("layout.css");
+
+/* Global Styles */
+
+html{height:100%}
+html,
+body {
+	font-size:12px;
+	line-height:1.6667;
+    color:#3f3f4d;
+	font-family:"Microsoft YaHei","宋体",Arial,Helvetica,sans-serif;
+	-ms-overflow-style: scrollbar;
+	min-width:1024px;
+}
+body{
+	background:#f6f6f6;
+}
+
+div,ul, li, ol, p, dl, dt, dd, h1, h2, h3, h4, h5,img {list-style:none; margin:0; padding:0; border: none;vertical-align: baseline;outline: none;}
+select{font-family:"Microsoft YaHei";border:1px solid #bdc6cf;border-radius:3px;color:#576077;}
+
+/*--- 链接样式---*/
+a{color:#3f3f4d;text-decoration:none;cursor:pointer;}
+a:focus{outline:none;}
+
+/* 通用定义---*/
+.left 		{float:left;display:inline;}
+.right 		{float:right;display:inline;}
+i,em{font-style:normal}
+
+.red{color:#f00;}
+.green{color:#33b01e}
+.blue{color:#52aaff}
+.radius_left{border-radius:3px 0 0 3px}
+.radius_right{border-radius:0 3px 3px 0;}
+.mrl10{margin-left:10px;}
+.mrb5{margin-bottom:5px;}
+.mrtb10{margin:10px 0;}
+.nbb{border:1px solid #bdc6cf;border-bottom:0;border-radius:3px;}/*灰色边框，没有底框*/
+.ntb{border:1px solid #bdc6cf;border-top:0;}/*灰色边框，没有顶框*/
+.overflow_auto1{height:120px;overflow:auto;}
+.cover_div{width:100%;background:#000;filter:alpha(opacity=50);opacity:0.5;position:absolute;top:0;left:0;z-index:1}
+
+
+/* 清除浮动 */
+.clearfix:before,.clearfix:after {content: ".";display: block;height: 0;visibility: hidden;}
+.clearfix:after {clear: both;}
+.clearfix {zoom: 1;}/* for ie6 & ie7 */
+
+/*文字对齐*/
+.txt_align_l{text-align:left;}
+.txt_align_r{text-align:right;}
+.txt_align_c{text-align:center;}
+

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:include="common/head :: header"></div>
+    <div th:include="common/plugins :: jsfooter"></div>
+    <meta charset="UTF-8"/>
+    <title>flowable工作流系统</title>
+    <style type="text/css">
+        .leftMenu {
+            width: 220px;
+            float: left;
+            height: 100vh;
+            background-color: #001529;
+            text-align: center;
+        }
+
+        .right_content {
+            width: calc(100% - 220px);
+            float: left;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid-index">
+    <div th:include="top.html"></div>
+    <div class='leftMenu' th:include="menu.html"></div>
+    <div class="right_content" th:include="::content"></div>
+</div>
+</body>
+<script type="text/javascript" th:src="@{/modules/index/office_index.js}"></script>
+</html>
