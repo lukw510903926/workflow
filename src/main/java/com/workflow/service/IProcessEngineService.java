@@ -2,9 +2,9 @@ package com.workflow.service;
 
 import com.github.pagehelper.PageInfo;
 import com.workflow.vo.ProcessDefinitionEntityVo;
-import org.activiti.api.process.model.ProcessInstance;
 import org.activiti.bpmn.model.UserTask;
 import org.activiti.engine.repository.Model;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.InputStream;

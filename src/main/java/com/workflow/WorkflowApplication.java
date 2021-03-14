@@ -17,7 +17,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  */
 @Slf4j
 @EnableCaching
-@SpringBootApplication//(exclude = {ProcessEngineAutoConfiguration.class})
+@SpringBootApplication
 @MapperScan(basePackages = "com.workflow.dao")
 @ServletComponentScan("com.workflow.config")
 public class WorkflowApplication extends SpringBootServletInitializer {
