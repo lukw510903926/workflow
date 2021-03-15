@@ -1,9 +1,9 @@
 package com.workflow.service.impl;
 
+import com.workflow.common.constants.Constants;
 import com.workflow.common.mybatis.BaseServiceImpl;
 import com.workflow.entity.BizInfoConf;
 import com.workflow.service.BizInfoConfService;
-import com.workflow.util.Constants;
 import com.workflow.util.LoginUser;
 import com.workflow.util.WebUtil;
 import org.apache.commons.collections.CollectionUtils;
@@ -14,9 +14,10 @@ import tk.mybatis.mapper.entity.Example;
 import java.util.List;
 
 /**
- * @author 2622
- * @time 2016年5月30日
- * @email lukw@eastcom-sw.com
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
+ * @description :
+ * @since : 2021/3/15 22:45
  */
 @Service
 public class BizInfoConfServiceImpl extends BaseServiceImpl<BizInfoConf> implements BizInfoConfService {

@@ -1,4 +1,4 @@
-package com.workflow.util;
+package com.workflow.common.activiti;
 
 import lombok.Data;
 import org.activiti.bpmn.model.FlowElement;

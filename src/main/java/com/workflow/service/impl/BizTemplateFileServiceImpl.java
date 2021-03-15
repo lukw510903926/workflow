@@ -22,9 +22,10 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * @author 2622
- * @time 2016年8月5日
- * @email lukw@eastcom-sw.com
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
+ * @description :
+ * @since : 2021/3/15 22:45
  */
 @Slf4j
 @Service
@@ -45,7 +46,8 @@ public class BizTemplateFileServiceImpl extends BaseServiceImpl<BizTemplateFile>
         Long bizId = templateFile.getBizId();
         if (bizId != null) {
             BizInfo bizInfo = this.bizInfoService.selectByKey(bizId);
-            templateFile.setFlowName(Optional.ofNullable(bizInfo).map(BizInfo::getBizType).orElse(null));
+            String bizType = Optional.ofNullable(bizInfo).map(BizInfo::getBizType).orElse(null);
+            templateFile.setFlowName(bizType);
         }
         templateFile.setId(templateFile.getId());
         return this.selectOne(templateFile);
@@ -53,23 +55,23 @@ public class BizTemplateFileServiceImpl extends BaseServiceImpl<BizTemplateFile>
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveOrUpdate(BizTemplateFile dataFile, MultipartFile file) {
+    public void saveOrUpdate(BizTemplateFile bizTemplateFile, MultipartFile file) {
 
         String fileName = file.getOriginalFilename();
-        dataFile.setFileName(fileName);
-        if (!this.check(dataFile)) {
+        bizTemplateFile.setFileName(fileName);
+        if (!this.check(bizTemplateFile)) {
             throw new ServiceException(" 相同名称模版已存在,请将原模板文件删除后再上传,所属流程+文件名唯一");
         }
         try (InputStream inputStream = file.getInputStream()) {
             String upload = this.uploadHelper.upload(inputStream, environment.getProperty("biz.file.path"), fileName);
-            dataFile.setFilePath(upload);
-            if (dataFile.getId() == null) {
-                dataFile.setCreateUser(WebUtil.getLoginUserId());
-                dataFile.setFullName(WebUtil.getLoginUser().getName());
-                dataFile.setCreateTime(new Date());
-                this.save(dataFile);
+            bizTemplateFile.setFilePath(upload);
+            if (bizTemplateFile.getId() == null) {
+                bizTemplateFile.setCreateUser(WebUtil.getLoginUserId());
+                bizTemplateFile.setFullName(WebUtil.getLoginUser().getName());
+                bizTemplateFile.setCreateTime(new Date());
+                this.save(bizTemplateFile);
             } else {
-                this.updateNotNull(dataFile);
+                this.updateNotNull(bizTemplateFile);
             }
         } catch (IOException e) {
             log.error("模板保存失败 :", e);

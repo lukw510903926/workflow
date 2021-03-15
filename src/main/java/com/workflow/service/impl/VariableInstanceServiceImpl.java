@@ -1,5 +1,6 @@
 package com.workflow.service.impl;
 
+import com.google.common.collect.Maps;
 import com.workflow.common.mybatis.BaseServiceImpl;
 import com.workflow.entity.BizInfo;
 import com.workflow.entity.BizLog;
@@ -8,17 +9,22 @@ import com.workflow.service.IVariableInstanceService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
+ * @description :
+ * @since : 2021/3/15 22:46
+ */
 @Service
 public class VariableInstanceServiceImpl extends BaseServiceImpl<ProcessVariableInstance> implements IVariableInstanceService {
 
     @Override
     public Map<String, ProcessVariableInstance> getVarMap(BizInfo bizInfo, String taskId, VariableLoadType type) {
 
-        Map<String, ProcessVariableInstance> map = new HashMap<>();
+        Map<String, ProcessVariableInstance> map = Maps.newHashMap();
         List<ProcessVariableInstance> tList = null;
         switch (type) {
             case ALL:
@@ -42,11 +48,11 @@ public class VariableInstanceServiceImpl extends BaseServiceImpl<ProcessVariable
     }
 
     @Override
-    public List<ProcessVariableInstance> loadValueByLog(BizLog logBean) {
+    public List<ProcessVariableInstance> loadValueByLog(BizLog bizLog) {
 
         ProcessVariableInstance instance = new ProcessVariableInstance();
-        instance.setBizId(logBean.getBizId());
-        instance.setTaskId(logBean.getTaskId());
+        instance.setBizId(bizLog.getBizId());
+        instance.setTaskId(bizLog.getTaskId());
         return this.select(instance);
     }
 }

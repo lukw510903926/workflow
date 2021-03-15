@@ -1,5 +1,6 @@
 package com.workflow.service.impl;
 
+import com.workflow.common.activiti.CommonJumpTaskCmd;
 import com.workflow.common.exception.ServiceException;
 import com.workflow.entity.BizInfo;
 import com.workflow.entity.BizInfoConf;
@@ -8,7 +9,6 @@ import com.workflow.service.CommandService;
 import com.workflow.service.IBizInfoService;
 import com.workflow.service.IProcessDefinitionService;
 import com.workflow.service.IProcessExecuteService;
-import com.workflow.util.CommonJumpTaskCmd;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.ManagementService;
 import org.activiti.engine.task.Task;
@@ -22,13 +22,11 @@ import java.util.Map;
 
 
 /**
- * <p> 节点跳转
- *
- * @author yangqi
- * @Description </p>
- * @email 13507615840@163.com
- * @since 2019/3/9 18:46
- **/
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
+ * @description :
+ * @since : 2021/3/15 22:45
+ */
 @Slf4j
 @Service
 public class CommandServiceImpl implements CommandService {

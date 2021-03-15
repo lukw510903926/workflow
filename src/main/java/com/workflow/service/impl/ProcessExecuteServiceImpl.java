@@ -1,6 +1,9 @@
 package com.workflow.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.workflow.common.constants.Constants;
 import com.workflow.common.exception.ServiceException;
 import com.workflow.entity.BizFile;
 import com.workflow.entity.BizInfo;
@@ -19,7 +22,6 @@ import com.workflow.service.IProcessExecuteService;
 import com.workflow.service.IProcessVariableService;
 import com.workflow.service.IVariableInstanceService;
 import com.workflow.service.auth.ISystemUserService;
-import com.workflow.util.Constants;
 import com.workflow.util.IdUtil;
 import com.workflow.util.LoginUser;
 import com.workflow.util.UploadFileUtil;
@@ -50,10 +52,16 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
+ * @description :
+ * @since : 2021/3/15 22:46
+ */
 @Slf4j
 @Service
-@Transactional(readOnly = true)
 public class ProcessExecuteServiceImpl implements IProcessExecuteService {
+
     @Autowired
     private IProcessVariableService processVariableService;
 
@@ -85,8 +93,8 @@ public class ProcessExecuteServiceImpl implements IProcessExecuteService {
     public Map<String, Object> loadBizLogInput(Long logId) {
 
         BizLog logBean = logService.selectByKey(logId);
-        Map<String, Object> results = new HashMap<>();
-        List<ProcessVariableInstance> values = Optional.ofNullable(logBean).map(entity -> instanceService.loadValueByLog(entity)).orElse(new ArrayList<>());
+        Map<String, Object> results = Maps.newHashMap();
+        List<ProcessVariableInstance> values = Optional.ofNullable(logBean).map(entity -> instanceService.loadValueByLog(entity)).orElse(Lists.newArrayList());
         values.forEach(instance -> results.put(instance.getVariableName(), instance.getValue()));
         return results;
     }
@@ -147,7 +155,8 @@ public class ProcessExecuteServiceImpl implements IProcessExecuteService {
         bizInfo.setCreateUser(username);
         bizInfo.setSource(source);
         bizInfo.setProcessDefinitionId(procDefId);
-        bizInfo.setBizType(getProcessDefinitionName(procDefId));
+        String processDefinitionName = getProcessDefinitionName(procDefId);
+        bizInfo.setBizType(processDefinitionName);
         bizInfo.setStatus(Constants.BIZ_TEMP);
         bizInfo.setCreateTime(now);
         bizInfo.setTitle(MapUtils.getString(params, "base.workTitle"));

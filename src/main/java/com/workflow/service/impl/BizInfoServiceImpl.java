@@ -1,6 +1,7 @@
 package com.workflow.service.impl;
 
 import com.github.pagehelper.PageInfo;
+import com.workflow.common.constants.Constants;
 import com.workflow.common.mybatis.BaseServiceImpl;
 import com.workflow.entity.BizFile;
 import com.workflow.entity.BizInfo;
@@ -12,7 +13,6 @@ import com.workflow.service.IBizFileService;
 import com.workflow.service.IBizInfoService;
 import com.workflow.service.IVariableInstanceService;
 import com.workflow.service.auth.ISystemUserService;
-import com.workflow.util.Constants;
 import com.workflow.util.PageUtil;
 import com.workflow.util.WebUtil;
 import com.workflow.vo.BaseVo;
@@ -32,8 +32,14 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-@Service
+/**
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
+ * @description :
+ * @since : 2021/3/15 22:49
+ */
 @Slf4j
+@Service
 public class BizInfoServiceImpl extends BaseServiceImpl<BizInfo> implements IBizInfoService {
 
     @Autowired
@@ -155,12 +161,14 @@ public class BizInfoServiceImpl extends BaseServiceImpl<BizInfo> implements IBiz
         List<BizInfo> list = this.select(bizInfo);
         if (CollectionUtils.isNotEmpty(list)) {
             list.forEach(entity -> {
-                entity.setCreateUser(Optional.ofNullable(this.userService.getUserByUsername(entity.getCreateUser())).map(SystemUser::getName).orElse(entity.getCreateUser()));
+                String createUser = Optional.ofNullable(this.userService.getUserByUsername(entity.getCreateUser())).map(SystemUser::getName).orElse(entity.getCreateUser());
+                entity.setCreateUser(createUser);
                 if (StringUtils.isNotBlank(entity.getTaskAssignee())) {
-                    entity.setTaskAssignee(Optional.ofNullable(this.userService.getUserByUsername(entity.getTaskAssignee())).map(SystemUser::getName).orElse(entity.getTaskAssignee()));
+                    String taskAssignee = Optional.ofNullable(this.userService.getUserByUsername(entity.getTaskAssignee())).map(SystemUser::getName).orElse(entity.getTaskAssignee());
+                    entity.setTaskAssignee(taskAssignee);
                 }
             });
         }
-        return new PageInfo<>(list);
+        return PageInfo.of(list);
     }
 }

@@ -3,6 +3,7 @@ package com.workflow.service.impl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.pagehelper.PageInfo;
+import com.google.common.collect.Sets;
 import com.workflow.common.exception.ServiceException;
 import com.workflow.service.IProcessEngineService;
 import com.workflow.util.PageUtil;
@@ -43,20 +44,17 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.zip.ZipInputStream;
 
 /**
- * <p>
- *
- * @author yangqi
- * @Description </p>
- * @email 13507615840@163.com
- * @since 19-2-15 下午10:02
- **/
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
+ * @description :
+ * @since : 2021/3/15 22:46
+ */
 @Slf4j
 @Service
 public class ProcessEngineServiceImpl implements IProcessEngineService {
@@ -70,7 +68,7 @@ public class ProcessEngineServiceImpl implements IProcessEngineService {
     @Override
     public Set<String> loadProcessStatus(String processId) {
 
-        Set<String> set = new HashSet<>();
+        Set<String> set = Sets.newHashSet();
         List<UserTask> result = this.getAllTaskByProcessKey(processId);
         if (CollectionUtils.isNotEmpty(result)) {
             result.forEach(entity -> set.add(entity.getName()));
@@ -116,9 +114,8 @@ public class ProcessEngineServiceImpl implements IProcessEngineService {
         ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
         processInstanceQuery.processInstanceId(procInsId);
         processInstanceQuery.processDefinitionKey(procDefKey);
-        page.setTotal(processInstanceQuery.count());
-        page.setList(processInstanceQuery.listPage(page.getStartRow(), page.getEndRow()));
-        return page;
+        List<ProcessInstance> processInstanceList = processInstanceQuery.listPage(page.getStartRow(), page.getEndRow());
+        return PageUtil.getResult(processInstanceList, processInstanceQuery.count());
     }
 
     /**
@@ -157,6 +154,7 @@ public class ProcessEngineServiceImpl implements IProcessEngineService {
     /**
      * 递归得到所有的UserTask
      *
+     * @param flowElements
      * @param result
      */
     private void getAllUserTaskByFlowElements(Collection<FlowElement> flowElements, List<UserTask> result) {

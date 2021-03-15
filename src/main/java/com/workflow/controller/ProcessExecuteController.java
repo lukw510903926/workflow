@@ -2,13 +2,13 @@ package com.workflow.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
+import com.workflow.common.constants.Constants;
 import com.workflow.entity.BizInfo;
 import com.workflow.entity.ProcessVariable;
 import com.workflow.service.IBizInfoService;
 import com.workflow.service.IProcessDefinitionService;
 import com.workflow.service.IProcessExecuteService;
 import com.workflow.service.IProcessVariableService;
-import com.workflow.util.Constants;
 import com.workflow.util.DataGrid;
 import com.workflow.util.RestResult;
 import com.workflow.vo.BaseVo;

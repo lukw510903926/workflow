@@ -19,8 +19,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
+ * @description :
+ * @since : 2021/3/15 22:46
+ */
 @Service
-@Transactional(readOnly = true)
 public class ProcessVariableServiceImpl extends BaseServiceImpl<ProcessVariable> implements IProcessVariableService {
 
 

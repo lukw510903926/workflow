@@ -1,4 +1,4 @@
-package com.workflow.util;
+package com.workflow.common.constants;
 
 public class Constants {
 

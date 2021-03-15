@@ -29,10 +29,10 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
- * 流程模型相关Controller
- *
- * @author ThinkGem
- * @version 2013-11-03
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
+ * @description :
+ * @since : 2021/3/15 22:46
  */
 @Slf4j
 @Service
@@ -112,8 +112,6 @@ public class ProcessModelServiceImpl implements IProcessModelService {
             ByteArrayInputStream in = new ByteArrayInputStream(bpmnBytes);
             Deployment deployment = repositoryService.createDeployment().name(modelData.getName())
                     .addInputStream(processName, in).deploy();
-            // .addString(processName, new String(bpmnBytes)).deploy();
-
             //设置流程分类
             List<ProcessDefinition> list = repositoryService.createProcessDefinitionQuery()
                     .deploymentId(deployment.getId()).list();

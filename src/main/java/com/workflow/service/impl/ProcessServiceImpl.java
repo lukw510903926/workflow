@@ -1,5 +1,6 @@
 package com.workflow.service.impl;
 
+import com.workflow.common.constants.Constants;
 import com.workflow.common.exception.ServiceException;
 import com.workflow.entity.BizInfo;
 import com.workflow.entity.auth.SystemRole;
@@ -7,7 +8,6 @@ import com.workflow.service.IProcessDefinitionService;
 import com.workflow.service.IProcessVariableService;
 import com.workflow.service.auth.ISystemRoleService;
 import com.workflow.service.auth.ISystemUserService;
-import com.workflow.util.Constants;
 import com.workflow.util.HistoryActivityFlow;
 import com.workflow.util.LoginUser;
 import com.workflow.util.ReflectionUtils;
@@ -22,7 +22,6 @@ import org.activiti.bpmn.model.Process;
 import org.activiti.bpmn.model.SequenceFlow;
 import org.activiti.bpmn.model.StartEvent;
 import org.activiti.engine.HistoryService;
-import org.activiti.engine.ProcessEngineConfiguration;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -53,9 +52,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
+ * @description :
+ * @since : 2021/3/15 22:44
+ */
 @Slf4j
 @Service
-@Transactional(readOnly = true)
 public class ProcessServiceImpl implements IProcessDefinitionService {
 
     @Autowired
@@ -72,9 +76,6 @@ public class ProcessServiceImpl implements IProcessDefinitionService {
 
     @Autowired
     private IProcessVariableService processVariableService;
-
-    @Autowired
-    private ProcessEngineConfiguration engineConfiguration;
 
     @Autowired
     private ISystemUserService systemUserService;
@@ -127,7 +128,8 @@ public class ProcessServiceImpl implements IProcessDefinitionService {
                     FlowElement flowElement = sequenceFlow.getTargetFlowElement();
                     if (flowElement instanceof Gateway) {
                         Gateway gateway = (Gateway) flowElement;
-                        gateway.getOutgoingFlows().stream().filter(entity -> StringUtils.isNotBlank(entity.getName()))
+                        gateway.getOutgoingFlows().stream()
+                                .filter(entity -> StringUtils.isNotBlank(entity.getName()))
                                 .forEach(outgoingFlow -> result.put(outgoingFlow.getId(), outgoingFlow.getName()));
                     }
                 });
@@ -314,7 +316,8 @@ public class ProcessServiceImpl implements IProcessDefinitionService {
         String transferValue = (String) variables.get("SYS_transfer_value");
         String buttonValue = (String) variables.get("SYS_BUTTON_VALUE");
 
-        if (StringUtils.isNotEmpty(buttonValue)) { // 获取当前任务的流出，并判断是否为当前活动任务
+        if (StringUtils.isNotEmpty(buttonValue)) {
+            // 获取当前任务的流出，并判断是否为当前活动任务
             ProcessInstance processInstance = this.getProcessInstance(processInstanceId);
             if (processInstance == null) {
                 // 流程已结束
