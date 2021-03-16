@@ -9,12 +9,12 @@ import com.workflow.service.IBizInfoService;
 import com.workflow.util.WebUtil;
 import com.workflow.util.io.UploadHelper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
@@ -31,13 +31,13 @@ import java.util.Optional;
 @Service
 public class BizTemplateFileServiceImpl extends BaseServiceImpl<BizTemplateFile> implements BizTemplateFileService {
 
-    @Autowired
+    @Resource
     private IBizInfoService bizInfoService;
 
-    @Autowired
+    @Resource
     private Environment environment;
 
-    @Autowired
+    @Resource
     private UploadHelper uploadHelper;
 
     @Override

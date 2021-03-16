@@ -1,5 +1,7 @@
 package com.workflow.service.act;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.workflow.util.PageHelper;
 import org.activiti.bpmn.converter.BpmnXMLConverter;
 import org.activiti.bpmn.model.BpmnModel;
@@ -17,35 +19,33 @@ import org.activiti.engine.runtime.ProcessInstanceQuery;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipInputStream;
 
 /**
- * 流程定义相关Controller
- *
- * @author ThinkGem
- * @version 2013-11-03
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
+ * @description :
+ * @since : 2021/3/16 22:56
  */
 @Service
 public class ActProcessService {
 
-    @Autowired
+    @Resource
     private RepositoryService repositoryService;
 
-    @Autowired
+    @Resource
     private RuntimeService runtimeService;
 
     /**
@@ -78,15 +78,12 @@ public class ActProcessService {
     public PageHelper<ProcessInstance> runningList(PageHelper<ProcessInstance> page, String procInsId, String procDefKey) {
 
         ProcessInstanceQuery processInstanceQuery = runtimeService.createProcessInstanceQuery();
-
         if (StringUtils.isNotBlank(procInsId)) {
             processInstanceQuery.processInstanceId(procInsId);
         }
-
         if (StringUtils.isNotBlank(procDefKey)) {
             processInstanceQuery.processDefinitionKey(procDefKey);
         }
-
         page.setTotal(processInstanceQuery.count());
         page.setList(processInstanceQuery.listPage(page.getFirstRow(), page.getMaxRow()));
         return page;
@@ -99,7 +96,7 @@ public class ActProcessService {
      * @throws Exception
      */
     public List<Map<String, Object>> getAllTaskByProcessKey(String processId) throws Exception {
-        List<Map<String, Object>> result = new ArrayList<>();
+        List<Map<String, Object>> result = Lists.newArrayList();
         InputStream bpmnStream = resourceRead(processId, null, "xml");
         XMLInputFactory xif = XMLInputFactory.newInstance();
         InputStreamReader in = new InputStreamReader(bpmnStream, Charset.defaultCharset());
@@ -126,7 +123,7 @@ public class ActProcessService {
         for (FlowElement flowElement : flowElements) {
             if (flowElement instanceof UserTask) {
                 UserTask userTask = (UserTask) flowElement;
-                Map<String, Object> temp = new HashMap<>();
+                Map<String, Object> temp = Maps.newHashMap();
                 temp.put("id", userTask.getId());
                 temp.put("name", userTask.getName());
                 result.add(temp);
@@ -165,9 +162,9 @@ public class ActProcessService {
             return null;
         }
         String resourceName = "";
-        if (resourceType.equals("image")) {
+        if ("image".equals(resourceType)) {
             resourceName = processDefinition.getDiagramResourceName();
-        } else if (resourceType.equals("xml")) {
+        } else if ("xml".equals(resourceType)) {
             resourceName = processDefinition.getResourceName();
         }
         return repositoryService.getResourceAsStream(processDefinition.getDeploymentId(), resourceName);
@@ -188,33 +185,29 @@ public class ActProcessService {
             InputStream fileInputStream = file.getInputStream();
             Deployment deployment = null;
             String extension = FilenameUtils.getExtension(fileName);
-            if (extension.equals("zip") || extension.equals("bar")) {
+            if ("zip".equals(extension) || "bar".equals(extension)) {
                 ZipInputStream zip = new ZipInputStream(fileInputStream);
                 deployment = repositoryService.createDeployment().addZipInputStream(zip).deploy();
-            } else if (extension.equals("png")) {
+            } else if ("png".equals(extension)) {
                 deployment = repositoryService.createDeployment().addInputStream(fileName, fileInputStream).deploy();
-            } else if (fileName.indexOf("bpmn20.xml") != -1) {
+            } else if (fileName.contains("bpmn20.xml")) {
                 deployment = repositoryService.createDeployment().addInputStream(fileName, fileInputStream).deploy();
-            } else if (extension.equals("bpmn")) {
+            } else if ("bpmn".equals(extension)) {
                 // bpmn扩展名特殊处理，转换为bpmn20.xml
                 String baseName = FilenameUtils.getBaseName(fileName);
                 deployment = repositoryService.createDeployment().addInputStream(baseName + ".bpmn20.xml", fileInputStream).deploy();
             } else {
                 message = "不支持的文件类型：" + extension;
             }
-
             List<ProcessDefinition> list = repositoryService.createProcessDefinitionQuery().deploymentId(deployment.getId()).list();
-
             // 设置流程分类
             for (ProcessDefinition processDefinition : list) {
                 repositoryService.setProcessDefinitionCategory(processDefinition.getId(), category);
                 message += "部署成功，流程ID=" + processDefinition.getId() + "<br/>";
             }
-
             if (CollectionUtils.isEmpty(list)) {
                 message = "部署失败，没有流程。";
             }
-
         } catch (Exception e) {
             throw new ActivitiException("部署失败！", e);
         }

@@ -14,7 +14,7 @@ import java.util.Date;
 public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 
 
-    private static String[] parsePatterns = {
+    private static final String[] PARSE_PATTERNS = {
             "yyyy-MM-dd", "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "yyyy-MM",
             "yyyy/MM/dd", "yyyy/MM/dd HH:mm:ss", "yyyy/MM/dd HH:mm", "yyyy/MM",
             "yyyy.MM.dd", "yyyy.MM.dd HH:mm:ss", "yyyy.MM.dd HH:mm", "yyyy.MM"};
@@ -81,19 +81,6 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         long s = (timeMillis / 1000 - day * 24 * 60 * 60 - hour * 60 * 60 - min * 60);
         long sss = (timeMillis - day * 24 * 60 * 60 * 1000 - hour * 60 * 60 * 1000 - min * 60 * 1000 - s * 1000);
         return (day > 0 ? day + "," : "") + hour + ":" + min + ":" + s + "." + sss;
-    }
-
-    /**
-     * 获取两个日期之间的天数
-     *
-     * @param before
-     * @param after
-     * @return
-     */
-    public static double getDistanceOfTwoDate(Date before, Date after) {
-        long beforeTime = before.getTime();
-        long afterTime = after.getTime();
-        return (afterTime - beforeTime) / (1000 * 60 * 60 * 24);
     }
 
     /**
@@ -270,7 +257,7 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
             return null;
         }
         try {
-            return parseDate(str.toString(), parsePatterns);
+            return parseDate(str.toString(), PARSE_PATTERNS);
         } catch (ParseException e) {
             return null;
         }
@@ -311,30 +298,5 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
             e.printStackTrace();
         }
         return date;
-    }
-
-    /**
-     * Long型数字串转换为Date，返回默认的datePattern格式字符串
-     *
-     * @return Date 日期对象
-     */
-    public static final Date convertLongDigitStringToDate(String dateLongDigitString) {
-        try {
-            return new Date(Long.parseLong(dateLongDigitString));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    /**
-     * @param args
-     * @throws ParseException
-     */
-    public static void main(String[] args) throws ParseException {
-        // System.out.println(formatDate(parseDate("2010/3/6")));
-        // System.out.println(getDate("yyyy年MM月dd日 E"));
-        // long time = new Date().getTime()-parseDate("2012-11-19").getTime();
-        // System.out.println(time/(24*60*60*1000));
     }
 }

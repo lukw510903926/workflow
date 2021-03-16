@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * @author 26223
- * @time 2016年10月10日
- * @email lukw@eastcom-sw.com
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
+ * @description :
+ * @since : 2021/3/16 22:46
  */
 public class DataGrid<T> implements Serializable {
 

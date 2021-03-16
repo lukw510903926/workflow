@@ -14,13 +14,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
- * <p>
- *
- * @author yangqi
- * @Description </p>
- * @email 13507615840@163.com
- * @since 2019/2/16 13:13
- **/
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
+ * @description :
+ * @since : 2021/3/16 22:59
+ */
 @Service
 public class SysUserRoleServiceImpl extends BaseServiceImpl<SysUserRole> implements ISysUserRoleService {
 

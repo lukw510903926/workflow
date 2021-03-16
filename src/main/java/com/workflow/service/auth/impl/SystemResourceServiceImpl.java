@@ -9,11 +9,11 @@ import com.workflow.service.auth.ISysRoleResourceService;
 import com.workflow.service.auth.ISystemResourceService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,7 +30,7 @@ import java.util.Optional;
 @Service
 public class SystemResourceServiceImpl extends BaseServiceImpl<SystemResource> implements ISystemResourceService {
 
-    @Autowired
+    @Resource
     private ISysRoleResourceService roleResourceService;
 
     @Override

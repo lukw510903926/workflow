@@ -1,9 +1,10 @@
 package com.workflow.util;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.Converter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.beans.Transient;
 import java.lang.reflect.Field;
@@ -13,8 +14,8 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,18 +26,16 @@ import java.util.Map;
  * @time 2016年10月13日
  * @email lukw@eastcom-sw.com
  */
-
+@Slf4j
 public class ReflectionUtils {
 
-    private static Logger logger = LoggerFactory.getLogger(ReflectionUtils.class);
-
-    private static DateFormat dateformat = DateFormat.getDateInstance();
+    private static final DateFormat DATE_INSTANCE = DateFormat.getDateInstance();
 
     public static Class<?> getGenderClass(final Class<?> clazz) {
 
         Type genType = clazz.getGenericSuperclass();
         if (!(genType instanceof ParameterizedType)) {
-            logger.warn(clazz.getSimpleName() + "'s superclass not ParameterizedType");
+            log.warn(clazz.getSimpleName() + "'s superclass not ParameterizedType");
             return Object.class;
         }
         Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
@@ -44,7 +43,7 @@ public class ReflectionUtils {
             return Object.class;
         }
         if (!(params[0] instanceof Class)) {
-            logger.warn(clazz.getSimpleName() + " not set the actual class on superclass generic parameter");
+            log.warn(clazz.getSimpleName() + " not set the actual class on superclass generic parameter");
             return Object.class;
         }
         return (Class<?>) params[0];
@@ -65,10 +64,8 @@ public class ReflectionUtils {
                 field.setAccessible(true);
                 return field.get(object);
             }
-        } catch (IllegalArgumentException e) {
-            logger.info("getter", e);
-        } catch (IllegalAccessException e) {
-            logger.info("getter", e);
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            log.info("getter", e);
         }
         return null;
     }
@@ -88,10 +85,8 @@ public class ReflectionUtils {
                 field.setAccessible(true);
                 field.set(object, value);
             }
-        } catch (IllegalArgumentException e) {
-            logger.info("setter", e);
-        } catch (IllegalAccessException e) {
-            logger.info("setter", e);
+        } catch (IllegalArgumentException | IllegalAccessException e) {
+            log.info("setter", e);
         }
     }
 
@@ -105,7 +100,7 @@ public class ReflectionUtils {
     private static Field getField(Object object, String fieldName) {
 
         List<Field> list = getFields(object, true);
-        if (list != null && !list.isEmpty()) {
+        if (!list.isEmpty()) {
             for (Field field : list) {
                 if (field.getName().equals(fieldName)) {
                     return field;
@@ -128,7 +123,7 @@ public class ReflectionUtils {
             return getFields(object);
         }
         Class<?> clazz = getClass(object);
-        List<Field> list = new ArrayList<Field>();
+        List<Field> list = new ArrayList<>();
         getFields(clazz, list);
         return list;
     }
@@ -136,7 +131,7 @@ public class ReflectionUtils {
     private static void getFields(Class<?> clazz, List<Field> list) {
 
         Field[] fields = clazz.getDeclaredFields();
-        if (fields != null && fields.length > 0) {
+        if (fields.length > 0) {
             for (Field field : fields) {
                 if (field.isAnnotationPresent(Transient.class)) {
                     continue;
@@ -157,7 +152,7 @@ public class ReflectionUtils {
     public static List<Field> getFields(Object object) {
 
         Class<?> clazz = getClass(object);
-        List<Field> list = new ArrayList<Field>();
+        List<Field> list = new ArrayList<>();
         for (; clazz != Object.class; clazz = clazz.getSuperclass()) {
             getFields(clazz, list);
         }
@@ -205,7 +200,7 @@ public class ReflectionUtils {
 
     private static Map<String, Object> beanToMap(Object object, List<Field> fields) {
 
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = Maps.newHashMap();
         if (fields != null && !fields.isEmpty()) {
             for (Field field : fields) {
                 String fieldName = field.getName();
@@ -224,7 +219,7 @@ public class ReflectionUtils {
     public static List<Method> getMethods(Object object) {
 
         Class<?> clazz = getClass(object);
-        List<Method> list = new ArrayList<Method>();
+        List<Method> list = Lists.newArrayList();
         for (; clazz != Object.class; clazz = clazz.getSuperclass()) {
             getMethods(list, clazz);
         }
@@ -244,7 +239,7 @@ public class ReflectionUtils {
             return getMethods(object);
         }
         Class<?> clazz = getClass(object);
-        List<Method> list = new ArrayList<Method>();
+        List<Method> list = Lists.newArrayList();
         getMethods(list, clazz);
         return list;
     }
@@ -252,10 +247,8 @@ public class ReflectionUtils {
     private static void getMethods(List<Method> list, Class<?> clazz) {
 
         Method[] methods = clazz.getDeclaredMethods();
-        if (methods != null && methods.length > 0) {
-            for (Method method : methods) {
-                list.add(method);
-            }
+        if (methods.length > 0) {
+            list.addAll(Arrays.asList(methods));
         }
     }
 
@@ -271,9 +264,7 @@ public class ReflectionUtils {
         List<Field> oFs = getFields(object);
         for (Field of : oFs) {
             for (Field tf : tFs) {
-                String ofSimpleName = of.getClass().getSimpleName();
-                String tfSimpleName = tf.getClass().getSimpleName();
-                if (of.getName().equals(tf.getName()) && ofSimpleName.equals(tfSimpleName)) {
+                if (of.getName().equals(tf.getName())) {
                     Object value = getter(object, of.getName());
                     setter(target, tf.getName(), value);
                 }
@@ -289,10 +280,7 @@ public class ReflectionUtils {
     public static Field getDeclaredField(Class<?> cls, String fileName) {
         while (!cls.equals(Object.class)) {
             try {
-                Field field = cls.getDeclaredField(fileName);
-                if (field != null) {
-                    return field;
-                }
+                return cls.getDeclaredField(fileName);
             } catch (Exception e) {
             }
             cls = cls.getSuperclass();
@@ -309,18 +297,16 @@ public class ReflectionUtils {
         }
         if ((Date.class.equals(toClass)) && (value instanceof String)) {
             try {
-                dateformat.parse((String) value);
+                DATE_INSTANCE.parse((String) value);
             } catch (Exception e) {
                 return null;
             }
         }
-        Object obj = null;
         try {
-            obj = convert2(value, toClass);
+            return convert2(value, toClass);
         } catch (Exception e) {
             return value;
         }
-        return obj;
     }
 
     private static Object convert2(Object value, Class<?> toClass) {

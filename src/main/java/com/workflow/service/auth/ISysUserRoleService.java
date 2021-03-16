@@ -7,16 +7,22 @@ import com.workflow.entity.auth.SysUserRole;
 import java.util.List;
 
 /**
- * <p>
- *
- * @author yangqi
- * @Description </p>
- * @email 13507615840@163.com
- * @since 2019/2/16 13:13
- **/
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
+ * @description :
+ * @since : 2021/3/16 23:01
+ */
 public interface ISysUserRoleService extends IBaseService<SysUserRole> {
 
+    /**
+     * @param roleId
+     * @return
+     */
     List<Long> findUserIdsByRoleId(Long roleId);
 
+    /**
+     * @param userId
+     * @return
+     */
     List<Long> findRoleIdsByUserId(Long userId);
 }

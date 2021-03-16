@@ -36,13 +36,13 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -62,31 +62,31 @@ import java.util.stream.Collectors;
 @Service
 public class ProcessExecuteServiceImpl implements IProcessExecuteService {
 
-    @Autowired
+    @Resource
     private IProcessVariableService processVariableService;
 
-    @Autowired
+    @Resource
     private IBizInfoService bizInfoService;
 
-    @Autowired
+    @Resource
     private IBizLogService logService;
 
-    @Autowired
+    @Resource
     private IBizFileService bizFileService;
 
-    @Autowired
+    @Resource
     private IProcessDefinitionService processDefinitionService;
 
-    @Autowired
+    @Resource
     private ISystemUserService sysUserService;
 
-    @Autowired
+    @Resource
     private BizInfoConfService bizInfoConfService;
 
-    @Autowired
+    @Resource
     private IVariableInstanceService instanceService;
 
-    @Autowired
+    @Resource
     private Environment environment;
 
     @Override

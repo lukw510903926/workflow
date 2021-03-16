@@ -36,6 +36,10 @@ public interface IBizInfoService extends IBaseService<BizInfo> {
      */
     PageInfo<BizInfo> findBizInfo(BizInfoVo bizInfoVo, PageInfo<BaseVo> page);
 
+    /**
+     * @param parentId
+     * @return
+     */
     List<BizInfo> getBizByParentId(Long parentId);
 
 }

@@ -14,12 +14,10 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 /**
- * @author : lukew
- * @project : IDEA
- * @createTime : 2018/4/14 8:10
- * @email : 13507615840@163.com
- * @gitHub : https://github.com/lukw510903926
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
  * @description :
+ * @since : 2021/3/16 22:56
  */
 public class WebUtil extends WebUtils {
 

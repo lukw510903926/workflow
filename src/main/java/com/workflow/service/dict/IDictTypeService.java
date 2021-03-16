@@ -7,13 +7,20 @@ import com.workflow.entity.dict.DictType;
 import java.util.List;
 
 /**
- * @author lukw
- * @email 13507615840@163.com
- * @create 2017-12-26 13:46
- **/
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
+ * @description :
+ * @since : 2021/3/16 23:02
+ */
 public interface IDictTypeService extends IBaseService<DictType> {
 
+    /**
+     * @param id
+     */
     void delete(Long id);
 
+    /**
+     * @param list
+     */
     void delete(List<Long> list);
 }

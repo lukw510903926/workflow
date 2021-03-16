@@ -13,10 +13,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.ManagementService;
 import org.activiti.engine.task.Task;
 import org.apache.commons.collections.MapUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.Map;
 
@@ -31,19 +31,19 @@ import java.util.Map;
 @Service
 public class CommandServiceImpl implements CommandService {
 
-    @Autowired
+    @Resource
     private ManagementService managementService;
 
-    @Autowired
+    @Resource
     private BizInfoConfService bizInfoConfService;
 
-    @Autowired
+    @Resource
     private IBizInfoService bizInfoService;
 
-    @Autowired
+    @Resource
     private IProcessExecuteService processExecuteService;
 
-    @Autowired
+    @Resource
     private IProcessDefinitionService processDefinitionService;
 
     @Override

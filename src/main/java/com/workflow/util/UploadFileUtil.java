@@ -11,16 +11,10 @@ import java.util.Date;
 import java.util.UUID;
 
 /**
- * 文件上传工具
- * <p>
- * Title: workflowWeb <br>
- * Description: <br>
- * Copyright: eastcom Copyright (C) 2009 <br>
- *
- * @author <a href="mailto:liyoujun@eastcom-sw.com">李友均</a><br>
- * @version 1.0 <br>
- * @e-mail: liyoujun@eastcom-sw.com <br>
- * @creatdate 2015年5月10日 上午11:24:45 <br>
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
+ * @description :
+ * @since : 2021/3/16 22:55
  */
 public class UploadFileUtil {
     /**
@@ -48,22 +42,18 @@ public class UploadFileUtil {
             bean.setCreateDate(date);
             bean.setPath(filePath2);
             bean.setName(file.getOriginalFilename());
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (IllegalStateException | IOException e) {
             e.printStackTrace();
         }
-        if (bean != null) {
-            //检测是否为图片
-            try {
-                Image image = ImageIO.read(pFile);
-                if (image == null) {
-                    bean.setFileType("FILE");
-                } else {
-                    bean.setFileType("IMAGE");
-                }
-            } catch (IOException ex) {
+        //检测是否为图片
+        try {
+            Image image = ImageIO.read(pFile);
+            if (image == null) {
+                bean.setFileType("FILE");
+            } else {
+                bean.setFileType("IMAGE");
             }
+        } catch (IOException ex) {
         }
         return bean;
     }

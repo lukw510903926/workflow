@@ -40,10 +40,10 @@ import org.activiti.image.ProcessDiagramGenerator;
 import org.activiti.image.impl.DefaultProcessDiagramGenerator;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -62,25 +62,25 @@ import java.util.Optional;
 @Service
 public class ProcessServiceImpl implements IProcessDefinitionService {
 
-    @Autowired
+    @Resource
     private TaskService taskService;
 
-    @Autowired
+    @Resource
     private HistoryService historyService;
 
-    @Autowired
+    @Resource
     private RuntimeService runtimeService;
 
-    @Autowired
+    @Resource
     private RepositoryService repositoryService;
 
-    @Autowired
+    @Resource
     private IProcessVariableService processVariableService;
 
-    @Autowired
+    @Resource
     private ISystemUserService systemUserService;
 
-    @Autowired
+    @Resource
     private ISystemRoleService systemRoleService;
 
     @Override
@@ -260,7 +260,7 @@ public class ProcessServiceImpl implements IProcessDefinitionService {
      * @return @
      */
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public boolean completeTask(BizInfo bizInfo, String taskId, Map<String, Object> variables) {
 
         try {
@@ -415,27 +415,6 @@ public class ProcessServiceImpl implements IProcessDefinitionService {
             throw new ServiceException("没有权限签收该任务,当前任务代办角色为 :" + roles.toString());
         }
         return true;
-    }
-
-    /**
-     * 转派任务
-     *
-     * @param taskId
-     * @param toAssignment
-     * @param assignmentType
-     * @return @
-     */
-    @Override
-    public boolean assignmentTask(String taskId, String toAssignment, String assignmentType) {
-
-        if (!("group".equalsIgnoreCase(assignmentType) || "user".equalsIgnoreCase(assignmentType))) {
-            throw new ServiceException("参数错误");
-        }
-        Task task = getTaskBean(taskId);
-        if (!WebUtil.getLoginUsername().equals(task.getAssignee())) {
-            throw new ServiceException("没有权限处理该任务");
-        }
-        return assignmentTask(task, toAssignment);
     }
 
     @Override

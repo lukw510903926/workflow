@@ -31,11 +31,11 @@ import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
@@ -59,10 +59,10 @@ import java.util.zip.ZipInputStream;
 @Service
 public class ProcessEngineServiceImpl implements IProcessEngineService {
 
-    @Autowired
+    @Resource
     private RepositoryService repositoryService;
 
-    @Autowired
+    @Resource
     private RuntimeService runtimeService;
 
     @Override
@@ -184,9 +184,9 @@ public class ProcessEngineServiceImpl implements IProcessEngineService {
             return null;
         }
         String resourceName = "";
-        if (resourceType.equals("image")) {
+        if ("image".equals(resourceType)) {
             resourceName = processDefinition.getDiagramResourceName();
-        } else if (resourceType.equals("xml")) {
+        } else if ("xml".equals(resourceType)) {
             resourceName = processDefinition.getResourceName();
         }
         return repositoryService.getResourceAsStream(processDefinition.getDeploymentId(), resourceName);
@@ -288,15 +288,4 @@ public class ProcessEngineServiceImpl implements IProcessEngineService {
         repositoryService.deleteDeployment(deploymentId, true);
     }
 
-    /**
-     * 删除部署的流程实例
-     *
-     * @param procInsId    流程实例ID
-     * @param deleteReason 删除原因，可为空
-     */
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public void deleteProcIns(String procInsId, String deleteReason) {
-        runtimeService.deleteProcessInstance(procInsId, deleteReason);
-    }
 }

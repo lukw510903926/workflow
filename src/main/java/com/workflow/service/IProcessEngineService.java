@@ -88,11 +88,4 @@ public interface IProcessEngineService {
      */
     void deleteDeployment(String deploymentId);
 
-    /**
-     * 删除部署的流程实例
-     *
-     * @param procInsId    流程实例ID
-     * @param deleteReason 删除原因，可为空
-     */
-    void deleteProcIns(String procInsId, String deleteReason);
 }

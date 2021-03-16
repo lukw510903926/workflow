@@ -11,24 +11,30 @@ import com.workflow.service.auth.ISystemUserService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
+ * @description :
+ * @since : 2021/3/16 22:59
+ */
 @Service
 public class SystemUserServiceImplImpl extends BaseServiceImpl<SystemUser> implements ISystemUserService {
 
-    @Autowired
+    @Resource
     private ISystemRoleService systemRoleService;
 
-    @Autowired
+    @Resource
     private ISysUserRoleService userRoleService;
 
     @Override

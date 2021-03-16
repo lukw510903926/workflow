@@ -7,9 +7,9 @@ import com.workflow.entity.dict.DictValue;
 import com.workflow.service.dict.IDictTypeService;
 import com.workflow.service.dict.IDictValueService;
 import com.workflow.util.WebUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +22,7 @@ import java.util.Optional;
 @Service
 public class DictValueServiceImplImpl extends BaseServiceImpl<DictValue> implements IDictValueService {
 
-    @Autowired
+    @Resource
     private IDictTypeService dictTypeService;
 
     @Override

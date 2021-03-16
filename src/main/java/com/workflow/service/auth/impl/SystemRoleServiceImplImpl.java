@@ -10,12 +10,12 @@ import com.workflow.service.auth.ISystemRoleService;
 import com.workflow.service.auth.ISystemUserService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
+import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -25,10 +25,10 @@ import java.util.Optional;
 @Service
 public class SystemRoleServiceImplImpl extends BaseServiceImpl<SystemRole> implements ISystemRoleService {
 
-    @Autowired
+    @Resource
     private ISystemUserService systemUserService;
 
-    @Autowired
+    @Resource
     private ISysUserRoleService userRoleService;
 
     @Override

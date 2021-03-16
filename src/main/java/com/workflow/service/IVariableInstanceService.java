@@ -9,10 +9,19 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 流程实例、流程任务实例数据处理
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
+ * @description : 流程实例、流程任务实例数据处理
+ * @since : 2021/3/16 23:07
  */
 public interface IVariableInstanceService extends IBaseService<ProcessVariableInstance> {
 
+    /**
+     * @param bizInfo
+     * @param taskId
+     * @param type
+     * @return
+     */
     Map<String, ProcessVariableInstance> getVarMap(BizInfo bizInfo, String taskId, VariableLoadType type);
 
     /**
