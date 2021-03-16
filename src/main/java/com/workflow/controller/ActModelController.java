@@ -2,9 +2,6 @@ package com.workflow.controller;
 
 import com.workflow.service.IProcessModelService;
 import com.workflow.util.RestResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,27 +9,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 
 /**
- * <p>
- * 流程模型相关
- * </p>
- *
- * @author yangqi
- * @email yangqi@ywwl.com
- * @since 2019/2/25 15:31
- **/
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
+ * @description :
+ * @since : 2021/3/16 22:42
+ */
 @Controller
 @RequestMapping("/act/model")
 public class ActModelController {
 
-    @Autowired
+    @Resource
     private IProcessModelService processModelService;
-
-    private Logger logger = LoggerFactory.getLogger(this.getClass());
-
 
     /**
      * 创建模型
@@ -83,7 +75,6 @@ public class ActModelController {
     @ResponseBody
     @RequestMapping("delete")
     public RestResult<Object> delete(String id) {
-        logger.info("删除Model---delete");
         processModelService.delete(id);
         return RestResult.success();
     }

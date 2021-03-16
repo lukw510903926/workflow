@@ -16,7 +16,6 @@ import com.workflow.vo.BizInfoVo;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.apache.commons.collections.MapUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -46,16 +46,16 @@ import java.util.Map;
 @RequestMapping("/workflow")
 public class ProcessExecuteController {
 
-    @Autowired
+    @Resource
     private IProcessExecuteService processExecuteService;
 
-    @Autowired
+    @Resource
     private IProcessDefinitionService processDefinitionService;
 
-    @Autowired
+    @Resource
     private IBizInfoService bizInfoService;
 
-    @Autowired
+    @Resource
     private IProcessVariableService processVariableService;
 
     /**

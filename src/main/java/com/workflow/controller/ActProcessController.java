@@ -12,7 +12,6 @@ import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.util.List;
@@ -40,10 +40,10 @@ import java.util.List;
 @RequestMapping("/act/process")
 public class ActProcessController {
 
-    @Autowired
+    @Resource
     private IProcessEngineService processEngineService;
 
-    @Autowired
+    @Resource
     private IProcessDefinitionService processDefinitionService;
 
     /**

@@ -2,7 +2,6 @@ package com.workflow.controller;
 
 import com.workflow.service.IProcessEngineService;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,12 +12,19 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.annotation.Resource;
 import java.util.Map;
 
+/**
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
+ * @description :
+ * @since : 2021/3/16 22:39
+ */
 @Controller
 public class ProcessController {
 
-    @Autowired
+    @Resource
     private IProcessEngineService processEngineService;
 
     /**

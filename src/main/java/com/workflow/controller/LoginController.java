@@ -8,11 +8,11 @@ import com.workflow.util.ReflectionUtils;
 import com.workflow.util.WebUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.HashSet;
@@ -30,10 +30,10 @@ import java.util.List;
 @RequestMapping("/login")
 public class LoginController {
 
-    @Autowired
+    @Resource
     private ISystemUserService sysUserService;
 
-    @Autowired
+    @Resource
     private ISystemRoleService systemRoleService;
 
     @RequestMapping("login")

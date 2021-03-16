@@ -1,6 +1,7 @@
 package com.workflow.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Maps;
 import com.workflow.entity.BizInfo;
 import com.workflow.service.CommandService;
 import com.workflow.service.IProcessDefinitionService;
@@ -15,39 +16,44 @@ import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.impl.persistence.entity.TaskEntityImpl;
 import org.activiti.engine.runtime.ProcessInstance;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
+ * @description :
+ * @since : 2021/3/16 22:40
+ */
 @Controller
 public class FlowableController {
 
-    @Autowired
+    @Resource
     private TaskService taskService;
 
-    @Autowired
+    @Resource
     private RuntimeService runtimeService;
 
-    @Autowired
+    @Resource
     private CommandService commandService;
 
-    @Autowired
+    @Resource
     private RepositoryService repositoryService;
 
-    @Autowired
+    @Resource
     private IProcessDefinitionService processDefinitionService;
 
     @ResponseBody
     @RequestMapping("/flow")
     public Map<String, Object> findOutGoingTransNames() {
 
-        Map<String, Object> result = new HashMap<String, Object>();
+        Map<String, Object> result = Maps.newHashMap();
         TaskEntityImpl task = (TaskEntityImpl) taskService.createTaskQuery().taskId("2527").singleResult();
         ProcessInstance pi = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId())
                 .singleResult();
@@ -74,7 +80,7 @@ public class FlowableController {
     @RequestMapping("/jump/{bizId}")
     public BizInfo jump(@PathVariable("bizId") String bizId) {
 
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = Maps.newHashMap();
         params.put("base.handleMessage", "工单跳转");
         params.put("base.handleResult", "工单跳转");
         params.put("base.handleName", "工单跳转");

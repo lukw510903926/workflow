@@ -10,7 +10,6 @@ import com.workflow.util.WebUtil;
 import com.workflow.vo.ProcessDefinitionEntityVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -46,10 +46,10 @@ import java.util.Map;
 @RequestMapping("/bizTemplateFile")
 public class BizTemplateFileController {
 
-    @Autowired
+    @Resource
     private BizTemplateFileService bizTemplateFileService;
 
-    @Autowired
+    @Resource
     private IProcessEngineService processEngineService;
 
     @RequestMapping("/index")
