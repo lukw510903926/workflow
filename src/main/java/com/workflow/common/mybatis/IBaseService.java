@@ -6,6 +6,12 @@ import tk.mybatis.mapper.entity.Example;
 import java.io.Serializable;
 import java.util.List;
 
+/**
+ * @author : yangqi
+ * @email : lukewei@mockuai.com
+ * @description :
+ * @since : 2021/3/16 22:11
+ */
 public interface IBaseService<T> {
 
     /**
