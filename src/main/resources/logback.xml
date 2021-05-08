@@ -8,7 +8,7 @@
     <property name="logPath" value="./logs"/>
     <!-- <property name="logPath" value="./logs" />  -->
     <!-- 日志文件名称 -->
-    <property name="appName" value="flow"/>
+    <property name="appName" value="workflow"/>
 
     <!-- 控制台 -->
     <property name="CONSOLE"
