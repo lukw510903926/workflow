@@ -24,6 +24,10 @@ public class PageUtil {
         Integer pageSize = Optional.ofNullable(baseVo).map(BaseVo::getPageNum).orElse(20);
         pageInfo.setPageNum(pageNum);
         pageInfo.setPageSize(pageSize);
+        int startRow = pageNum > 0 ? (pageNum - 1) * pageSize : 0;
+        int endRow = startRow + pageSize * (pageNum > 0 ? 1 : 0);
+        pageInfo.setStartRow(startRow);
+        pageInfo.setEndRow(endRow);
         return pageInfo;
 
     }
