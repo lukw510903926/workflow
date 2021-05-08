@@ -3,7 +3,6 @@ package com.workflow.service;
 import com.github.pagehelper.PageInfo;
 import com.workflow.vo.ProcessDefinitionEntityVo;
 import org.activiti.bpmn.model.UserTask;
-import org.activiti.engine.repository.Model;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -72,14 +71,6 @@ public interface IProcessEngineService {
      * @return
      */
     String deploy(String category, MultipartFile file);
-
-    /**
-     * 将部署的流程转换为模型
-     *
-     * @param procDefId
-     * @return
-     */
-    Model convertToModel(String procDefId);
 
     /**
      * 删除部署的流程，级联删除流程实例

@@ -1,7 +1,5 @@
 package com.workflow.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Sets;
 import com.workflow.common.exception.ServiceException;
@@ -16,13 +14,10 @@ import org.activiti.bpmn.model.FlowElement;
 import org.activiti.bpmn.model.Process;
 import org.activiti.bpmn.model.SubProcess;
 import org.activiti.bpmn.model.UserTask;
-import org.activiti.editor.constants.ModelDataJsonConstants;
-import org.activiti.editor.language.json.converter.BpmnJsonConverter;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntityImpl;
 import org.activiti.engine.repository.Deployment;
-import org.activiti.engine.repository.Model;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -235,46 +230,6 @@ public class ProcessEngineServiceImpl implements IProcessEngineService {
             throw new ServiceException("部署失败！", e);
         }
         return builder.toString();
-    }
-
-    /**
-     * 将部署的流程转换为模型
-     *
-     * @param procDefId
-     */
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public Model convertToModel(String procDefId) {
-
-        try {
-            ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().processDefinitionId(procDefId).singleResult();
-            InputStream resource = repositoryService.getResourceAsStream(processDefinition.getDeploymentId(), processDefinition.getResourceName());
-            XMLInputFactory xif = XMLInputFactory.newInstance();
-            InputStreamReader in = new InputStreamReader(resource, StandardCharsets.UTF_8);
-            XMLStreamReader xtr = xif.createXMLStreamReader(in);
-            BpmnModel bpmnModel = new BpmnXMLConverter().convertToBpmnModel(xtr);
-            BpmnJsonConverter converter = new BpmnJsonConverter();
-            ObjectNode modelNode = converter.convertToJson(bpmnModel);
-            Model modelData = repositoryService.newModel();
-            modelData.setKey(processDefinition.getKey());
-            modelData.setName(processDefinition.getResourceName());
-            modelData.setCategory(processDefinition.getCategory());
-            modelData.setDeploymentId(processDefinition.getDeploymentId());
-            modelData.setVersion(Integer.parseInt(String.valueOf(repositoryService.createModelQuery().modelKey(modelData.getKey()).count() + 1)));
-
-            ObjectNode modelObjectNode = new ObjectMapper().createObjectNode();
-            modelObjectNode.put(ModelDataJsonConstants.MODEL_NAME, processDefinition.getName());
-            modelObjectNode.put(ModelDataJsonConstants.MODEL_REVISION, modelData.getVersion());
-            modelObjectNode.put(ModelDataJsonConstants.MODEL_DESCRIPTION, processDefinition.getDescription());
-            modelData.setMetaInfo(modelObjectNode.toString());
-
-            repositoryService.saveModel(modelData);
-            repositoryService.addModelEditorSource(modelData.getId(), modelNode.toString().getBytes(StandardCharsets.UTF_8));
-            return modelData;
-        } catch (XMLStreamException e) {
-            log.error("将部署的流程转换为模型失败 : ", e);
-            throw new ServiceException("将部署的流程转换为模型失败");
-        }
     }
 
     /**
