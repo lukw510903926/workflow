@@ -152,7 +152,6 @@ create table `t_biz_process_variable`
     `ref_param`             longtext,
     `ref_variable`          varchar(64) default null,
     `is_required`           bit(1)      not null,
-    `version`               int(11) not null,
     `view_component`        longtext,
     `view_datas`            longtext,
     `view_params`           longtext,
