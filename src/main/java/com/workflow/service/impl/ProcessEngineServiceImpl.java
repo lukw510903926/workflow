@@ -78,11 +78,13 @@ public class ProcessEngineServiceImpl implements IProcessEngineService {
     public PageInfo<ProcessDefinitionEntityVo> processList(ProcessDefinitionEntityVo processDefinition) {
 
         ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
-        if (StringUtils.isNotEmpty(processDefinition.getName())) {
-            processDefinitionQuery.processDefinitionKey(processDefinition.getKey());
-        }
-        if (StringUtils.isNotEmpty(processDefinition.getKey())) {
-            processDefinitionQuery.processDefinitionKey(processDefinition.getKey());
+        if (processDefinition != null) {
+            if (StringUtils.isNotEmpty(processDefinition.getName())) {
+                processDefinitionQuery.processDefinitionKey(processDefinition.getKey());
+            }
+            if (StringUtils.isNotEmpty(processDefinition.getKey())) {
+                processDefinitionQuery.processDefinitionKey(processDefinition.getKey());
+            }
         }
 
         PageInfo<BaseVo> page = PageUtil.getPage(processDefinition);
