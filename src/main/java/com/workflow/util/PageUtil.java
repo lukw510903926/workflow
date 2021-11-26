@@ -20,8 +20,8 @@ public class PageUtil {
     public static PageInfo<BaseVo> getPage(BaseVo baseVo) {
 
         PageInfo<BaseVo> pageInfo = new PageInfo<>();
-        Integer pageNum = Optional.ofNullable(baseVo).map(BaseVo::getPageNum).orElse(1);
-        Integer pageSize = Optional.ofNullable(baseVo).map(BaseVo::getPageNum).orElse(20);
+        int pageNum = Optional.ofNullable(baseVo).map(BaseVo::getPageNum).orElse(1);
+        int pageSize = Optional.ofNullable(baseVo).map(BaseVo::getPageNum).orElse(20);
         pageInfo.setPageNum(pageNum);
         pageInfo.setPageSize(pageSize);
         int startRow = pageNum > 0 ? (pageNum - 1) * pageSize : 0;
